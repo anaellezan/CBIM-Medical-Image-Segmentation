@@ -5,7 +5,7 @@ import os
 import random
 import yaml
 
-def ResampleCMRImage(imImage, imLabel, save_path, patient_name, count, target_spacing=(1., 1., 1.)):
+def ResampleCTmage(imImage, imLabel, save_path, patient_name, count, target_spacing=(1., 1., 1.)):
 
     assert imImage.GetSpacing() == imLabel.GetSpacing()
     assert imImage.GetSize() == imLabel.GetSize()
@@ -37,10 +37,8 @@ def ResampleCMRImage(imImage, imLabel, save_path, patient_name, count, target_sp
 if __name__ == '__main__':
 
 
-    src_path = '/research/cbim/medical/medical-share/public/ACDC/raw/training/'
-    tgt_path = '/research/cbim/medical/yg397/tgt_dir/'
-
-
+    src_path = '/media/DATA/azanella/acdc_challenge/ACDC/database/training/'
+    tgt_path = '/media/sharedata/atriumCT/atrium_medFormer/acdc_dataset/'
 
 
     patient_list = list(range(1, 101))
@@ -70,7 +68,7 @@ if __name__ == '__main__':
                 img = sitk.ReadImage('%s.nii.gz'%img_name)
                 lab = sitk.ReadImage('%s_gt.nii.gz'%img_name)
 
-                ResampleCMRImage(img, lab, tgt_path, patient_name, count, (1.5625, 1.5625, 5.0))
+                ResampleCTmage(img, lab, tgt_path, patient_name, count, (1.5625, 1.5625, 5.0))
                 count += 1
                 print(name, 'done')
 

@@ -13,6 +13,10 @@ def get_dataset(args, mode, **kwargs):
             from .dim3.dataset_acdc import CMRDataset
 
             return CMRDataset(args, mode=mode, k_fold=args.k_fold, k=kwargs['fold_idx'], seed=args.split_seed)
+        elif args.dataset == 'LA_CT00':
+            from .dim3.dataset_LA_CT00 import LA_CT00_Dataset
+
+            return LA_CT00_Dataset(args, mode=mode, k_fold=args.k_fold, k=kwargs['fold_idx'], seed=args.split_seed)
         elif args.dataset == 'lits':
             from .dim3.dataset_lits import LiverDataset
 

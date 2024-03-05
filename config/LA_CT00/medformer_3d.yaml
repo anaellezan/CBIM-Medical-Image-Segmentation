@@ -1,7 +1,7 @@
 #DATA
-data_root: /media/sharedata/atriumCT/atrium_medFormer/acdc_dataset/
-classes: 4
-modality: mri
+data_root: /media/sharedata/atriumCT/atrium_medFormer/LA_CT00_dataset/
+classes: 5
+modality: CT
 
 
 #MODEL
@@ -30,8 +30,8 @@ se: True
 
 
 #TRAIN
-epochs: 20 #150
-training_size: [16, 192, 192] # training crop size
+epochs: 150 #20 #150
+training_size: [ 96, 160, 160] #[48, 80, 80] #  training crop size, patch size de nnUnet ?
 start_epoch: 0
 num_workers: 2 # modify this if I/O or augmentation is slow
 aug_device: 'cpu'
@@ -46,7 +46,7 @@ optimizer: adamw
 base_lr: 0.001 
 betas: [0.9, 0.999]
 weight_decay: 0.05  # weight decay of the optimizer
-weight: [0.5, 1, 1, 1]  # weitght of each class in the loss function
+weight: [0.5, 1, 2, 3, 3]  # weitght of each class in the loss function
 rlt: 1 # relation between CE and Dice loss
 
 print_freq: 1

@@ -63,8 +63,12 @@ def train_net(net, args, ema_net=None, fold_idx=0):
         persistent_workers=(args.num_workers>0)
     )
 
+    print(torch.cuda.memory_summary(device=None, abbreviated=False))
+
     testset = get_dataset(args, mode='test', fold_idx=fold_idx)
     testLoader = data.DataLoader(testset, batch_size=1, pin_memory=True, shuffle=False, num_workers=2)
+
+    print(torch.cuda.memory_summary(device=None, abbreviated=False))
     
     logging.info(f"Created Dataset and DataLoader")
 
@@ -334,6 +338,7 @@ if __name__ == '__main__':
         if args.ema:
             ema_net.cuda()
         logging.info(f"Created Model")
+        print(torch.cuda.memory_summary(device=None, abbreviated=False))
         best_Dice, best_HD, best_ASD = train_net(net, args, ema_net, fold_idx=fold_idx)
 
         logging.info(f"Training and evaluation on Fold {fold_idx} is done")

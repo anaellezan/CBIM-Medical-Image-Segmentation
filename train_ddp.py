@@ -232,7 +232,7 @@ def train_epoch(trainLoader, net, ema_net, optimizer, epoch, writer, criterion, 
 
 
 def get_parser():
-    parser = argparse.ArgumentParser(description='CBIM Meidcal Image Segmentation')
+    parser = argparse.ArgumentParser(description='LA CT00 Image Segmentation')
     parser.add_argument('--dataset', type=str, default='acdc', help='dataset name')
     parser.add_argument('--model', type=str, default='unet', help='model name')
     parser.add_argument('--dimension', type=str, default='2d', help='2d model or 3d model')
@@ -262,6 +262,8 @@ def get_parser():
 
     for key, value in config.items():
         setattr(args, key, value)
+
+    print('Configurations loaded.')
 
     return args
     
@@ -394,7 +396,11 @@ if __name__ == '__main__':
 
 
     ngpus_per_node = torch.cuda.device_count()
-    
+    def force_cudnn_initialization():
+        s = 32
+        dev = torch.device('cuda')
+        torch.nn.functional.conv2d(torch.zeros(s, s, s, s, device=dev), torch.zeros(s, s, s, s, device=dev))
+    force_cudnn_initialization()
     
     Dice_list, HD_list, ASD_list = [], [], []
     for fold_idx in range(args.k_fold):
